@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "HomeTimelineViewController.h"
+#import "User.h"
+#import "TwttierClient.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +20,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.0 green:0.51 blue:0.71 alpha:1.0]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
+
+    [self initWindowStyle];
+    [self userValidation];
+
     return YES;
 }
 
@@ -40,6 +49,37 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    [[TwitterClient sharedInstance] openURL:url];
+    
+    return YES;
+}
+
+#pragma mark - Initializers
+- (void)initWindowStyle {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+}
+
+#pragma mark - User helpers
+
+- (void)userDidLogout {
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
+}
+
+- (void)userValidation {
+    User *user = [User currentUser];
+
+    if (user) {
+        NSLog(@"[INFO] Welcome %@", user.name);
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[HomeTimelineViewController alloc] init]];
+    } else {
+        NSLog(@"[INFO] Not logged in");
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
+    }
 }
 
 @end

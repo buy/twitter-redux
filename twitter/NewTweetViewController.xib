@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewTweetViewController">
+            <connections>
+                <outlet property="mainView" destination="Gza-ZN-aQ8" id="sme-FM-Wfb"/>
+                <outlet property="nameLabel" destination="zoE-hj-Mmj" id="eqN-HV-0tn"/>
+                <outlet property="profileImage" destination="ik3-Lx-oGN" id="wgq-xb-Dfg"/>
+                <outlet property="screenNameLabel" destination="17c-OY-3Bv" id="x87-cU-y3s"/>
+                <outlet property="statusText" destination="G1Z-up-lp1" id="hVv-fr-oMy"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gza-ZN-aQ8">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ik3-Lx-oGN">
+                            <rect key="frame" x="8" y="8" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="NQV-0P-NGs"/>
+                                <constraint firstAttribute="height" constant="50" id="kt2-sv-zdA"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" text="Chang Liu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoE-hj-Mmj">
+                            <rect key="frame" x="66" y="8" width="60.5" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="VIc-AR-U43"/>
+                                <constraint firstAttribute="height" constant="20" id="bI4-LP-b5m"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="VIc-AR-U43"/>
+                                </mask>
+                            </variation>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="@ChangLiu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17c-OY-3Bv">
+                            <rect key="frame" x="66" y="28" width="64.5" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="NKP-Bo-lpP"/>
+                                <constraint firstAttribute="height" constant="20" id="ij8-D1-BZG"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" red="0.53333333329999999" green="0.59999999999999998" blue="0.65098039220000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="NKP-Bo-lpP"/>
+                                </mask>
+                            </variation>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="G1Z-up-lp1">
+                            <rect key="frame" x="8" y="66" width="304" height="200"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="Wa8-TI-YRk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="17c-OY-3Bv" firstAttribute="top" secondItem="zoE-hj-Mmj" secondAttribute="bottom" id="5X9-0w-VnR"/>
+                        <constraint firstItem="17c-OY-3Bv" firstAttribute="leading" secondItem="ik3-Lx-oGN" secondAttribute="trailing" constant="8" id="6Va-rA-BrB"/>
+                        <constraint firstItem="G1Z-up-lp1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ik3-Lx-oGN" secondAttribute="bottom" constant="8" id="BxC-Lv-51T"/>
+                        <constraint firstAttribute="trailing" secondItem="G1Z-up-lp1" secondAttribute="trailing" constant="8" id="NSn-W8-oLF"/>
+                        <constraint firstItem="ik3-Lx-oGN" firstAttribute="leading" secondItem="Gza-ZN-aQ8" secondAttribute="leading" constant="8" id="Phw-Pc-INO"/>
+                        <constraint firstItem="zoE-hj-Mmj" firstAttribute="top" secondItem="Gza-ZN-aQ8" secondAttribute="top" constant="8" id="awc-g1-9nG"/>
+                        <constraint firstItem="zoE-hj-Mmj" firstAttribute="leading" secondItem="ik3-Lx-oGN" secondAttribute="trailing" constant="8" id="rUR-2s-vL2"/>
+                        <constraint firstItem="ik3-Lx-oGN" firstAttribute="top" secondItem="Gza-ZN-aQ8" secondAttribute="top" constant="8" id="sDO-r1-Zeg"/>
+                        <constraint firstItem="G1Z-up-lp1" firstAttribute="leading" secondItem="Gza-ZN-aQ8" secondAttribute="leading" constant="8" id="yz9-CT-M5U"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Gza-ZN-aQ8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="XvE-SF-IhR"/>
+                <constraint firstItem="Gza-ZN-aQ8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aHM-kh-lPb"/>
+                <constraint firstAttribute="bottom" secondItem="Gza-ZN-aQ8" secondAttribute="bottom" id="oHr-sE-NiG"/>
+                <constraint firstAttribute="trailing" secondItem="Gza-ZN-aQ8" secondAttribute="trailing" id="uOJ-PF-GYz"/>
+            </constraints>
+            <point key="canvasLocation" x="291" y="263"/>
+        </view>
+    </objects>
+</document>
