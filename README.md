@@ -33,7 +33,7 @@ Time spent: 38 hours
 - [x] Progress bar when loading the data
 
 ### Video Walkthrough
-![Video Walkthrough](TBD)
+![Video Walkthrough](https://github.com/buy/twitter/blob/master/Demo/twitter_demo.gif?raw=true)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/)
 
