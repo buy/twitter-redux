@@ -191,4 +191,20 @@ void runOnMainQueueWithoutDeadlocking(void (^block)(void)) {
     }
 }
 
+- (void)alertNetworkError {
+    UIAlertController *myAlertController = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                               message:@"Error occurred while connecting to the server, please try again later"
+                                                                        preferredStyle:UIAlertControllerStyleAlert                   ];
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [myAlertController dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    [myAlertController addAction: ok];
+    [self presentViewController:myAlertController animated:YES completion:nil];
+}
+
 @end

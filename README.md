@@ -2,7 +2,7 @@
 
 This is a Twitter app for iOS as the [week 3 assignment](https://courses.codepath.com/courses/intro_to_ios/unit/3#!assignment) of CodePath.
 
-Time spent: 0 hours
+Time spent: 38 hours
 
 ### Required:
 - [x] User can sign in using OAuth login flow
@@ -22,7 +22,15 @@ Time spent: 0 hours
 - [x] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 
 ### Additional:
-TBD
+- [x] App icon
+- [x] Advanced UI
+- [x] User can not retweet his own tweet
+- [x] Disable Tweet button when tweet is more than 140 chars
+- [x] Color / grey icon based on tweet data
+- [x] Icon notification when user compose tweet in Reply mode
+- [x] Retweet icon at top of a tweet if the tweet is a retweet
+- [x] Network error notification/handler
+- [x] Progress bar when loading the data
 
 ### Video Walkthrough
 ![Video Walkthrough](TBD)
