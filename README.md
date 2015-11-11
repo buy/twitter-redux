@@ -2,7 +2,7 @@
 
 This is a Twitter app for iOS as the [week 3 assignment](https://courses.codepath.com/courses/intro_to_ios/unit/3#!assignment) of CodePath.
 
-Time spent: 38 hours
+Time spent: 39 hours
 
 ### Required:
 - [x] User can sign in using OAuth login flow
@@ -24,7 +24,7 @@ Time spent: 38 hours
 ### Additional:
 - [x] App icon
 - [x] Advanced UI
-- [x] User can not retweet his own tweet
+- [x] User can not retweet his own tweet, retweet button will be greyed out in detailed view
 - [x] Disable Tweet button when tweet is more than 140 chars
 - [x] Color / grey icon based on tweet data
 - [x] Icon notification when user compose tweet in Reply mode

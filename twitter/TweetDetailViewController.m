@@ -84,14 +84,21 @@
     self.retweetCountLabel.hidden = [tweet.retweetedCount intValue] == 0;
     self.likeCountLabel.text = [NSString stringWithFormat:@"%@", tweet.likedCount];
     self.likeCountLabel.hidden = [tweet.likedCount intValue] == 0;
-    
-    if (self.tweet.retweeted) {
-        [self.retweetImage setImage:[UIImage imageNamed:@"RetweetOn"] forState:UIControlStateNormal];
-        self.retweetCountLabel.textColor = [UIColor colorWithRed:0.10 green:0.81 blue:0.53 alpha:1.0];
+
+    if (self.tweet.user.userID == [User currentUser].userID) {
+        [self.retweetImage setImage:[UIImage imageNamed:@"RetweetUnavailable"] forState:UIControlStateNormal];
+        [self.retweetImage setEnabled:NO];
     }
     else {
-        [self.retweetImage setImage:[UIImage imageNamed:@"Retweet"] forState:UIControlStateNormal];
-        self.retweetCountLabel.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
+        [self.retweetImage setEnabled:YES];
+        if (self.tweet.retweeted) {
+            [self.retweetImage setImage:[UIImage imageNamed:@"RetweetOn"] forState:UIControlStateNormal];
+            self.retweetCountLabel.textColor = [UIColor colorWithRed:0.10 green:0.81 blue:0.53 alpha:1.0];
+        }
+        else {
+            [self.retweetImage setImage:[UIImage imageNamed:@"Retweet"] forState:UIControlStateNormal];
+            self.retweetCountLabel.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
+        }
     }
     
     if (self.tweet.liked) {
@@ -133,7 +140,7 @@
 
 - (void)onRetweet {
     NSDictionary *tweetData = @{@"id": self.tweet.tweetID};
-    
+
     if (self.tweet.retweeted) {
         [[TwitterClient sharedInstance] destroyRetweetWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {
             if (tweet) {
