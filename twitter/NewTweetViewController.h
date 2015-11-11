@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
 
-extern NSString * const PostNewTweetNofication;
+extern NSString * const TweetUpdateNofication;
 
 @interface NewTweetViewController : UIViewController
 
-- (instancetype)initWithTweet:(Tweet *)tweet;
+- (instancetype)initWithDictionary:(NSDictionary *)data;
 
 @end

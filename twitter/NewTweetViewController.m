@@ -11,27 +11,35 @@
 #import "User.h"
 #import "UIImageView+AFNetworking.h"
 
-NSString * const PostNewTweetNofication = @"PostNewTweetNofication";
+NSString * const TweetUpdateNofication = @"PostNewTweetNofication";
 
-@interface NewTweetViewController ()
+@interface NewTweetViewController () <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *statusText;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
+@property (weak, nonatomic) IBOutlet UIImageView *replyImage;
+@property (weak, nonatomic) IBOutlet UILabel *replyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusTextCount;
+@property (weak, nonatomic) IBOutlet UIButton *tweetButton;
 
 @property (weak, nonatomic) Tweet *tweet;
+@property (weak, nonatomic) NSString *replyTo;
+
+- (IBAction)onBottomTweetButton:(id)sender;
 
 @end
 
 @implementation NewTweetViewController
 
-- (instancetype)initWithTweet:(Tweet *)tweet {
+- (instancetype)initWithDictionary:(NSDictionary *)data {
     self = [super init];
 
     if (self) {
-        self.tweet = tweet;
+        self.tweet = data[@"tweet"];
+        self.replyTo = data[@"replyTo"];
     }
 
     return self;
@@ -51,6 +59,18 @@ NSString * const PostNewTweetNofication = @"PostNewTweetNofication";
     self.profileImage.layer.cornerRadius = 5;
     self.nameLabel.text = user.name;
     self.screenNameLabel.text = user.screenName;
+
+    if (self.replyTo) {
+        self.replyImage.hidden = NO;
+        self.replyLabel.hidden = NO;
+        self.replyLabel.text = [NSString stringWithFormat:@"Reply to %@", self.replyTo ];
+    }
+    else {
+        self.replyImage.hidden = YES;
+        self.replyLabel.hidden = YES;
+    }
+
+    self.statusText.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +84,6 @@ NSString * const PostNewTweetNofication = @"PostNewTweetNofication";
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweet" style:UIBarButtonItemStylePlain target:self action:@selector(onTweetButton)];
 }
 
 - (void)loadUser {
@@ -75,7 +94,7 @@ NSString * const PostNewTweetNofication = @"PostNewTweetNofication";
     self.screenNameLabel.text = user.screenName;
 }
 
-#pragma mark - Private methods
+#pragma mark - Event handler
 
 - (void)onCancelButton {
     [self.mainView endEditing:YES];
@@ -99,7 +118,7 @@ NSString * const PostNewTweetNofication = @"PostNewTweetNofication";
     [[TwitterClient sharedInstance] postTweetWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {
         if (tweet) {
             NSLog(@"[INFO] New tweet posted");
-            [[NSNotificationCenter defaultCenter] postNotificationName:PostNewTweetNofication object:nil userInfo:@{@"tweet": tweet}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TweetUpdateNofication object:nil userInfo:@{@"tweet": tweet}];
             [self dismissViewControllerAnimated:YES completion:nil];
         }
         else {
@@ -108,4 +127,21 @@ NSString * const PostNewTweetNofication = @"PostNewTweetNofication";
     }];
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+    int statusTextLength = (int)self.statusText.text.length;
+    self.statusTextCount.text = [NSString stringWithFormat:@"%d", 140 - statusTextLength];
+
+    if (statusTextLength > 140) {
+        self.statusTextCount.textColor = [UIColor redColor];
+        [self.tweetButton setEnabled:NO];
+    }
+    else {
+        self.statusTextCount.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
+        [self.tweetButton setEnabled:YES];
+    }
+}
+
+- (IBAction)onBottomTweetButton:(id)sender {
+    [self onTweetButton];
+}
 @end

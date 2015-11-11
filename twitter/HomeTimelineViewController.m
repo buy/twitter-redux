@@ -14,11 +14,12 @@
 #import "TweetCell.h"
 #import "TwttierClient.h"
 #import "MBProgressHUD.h"
+#import "SVPullToRefresh.h"
 
 @interface HomeTimelineViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *homelineTableView;
-@property (strong, nonatomic) NSArray *tweets;
+@property (strong, nonatomic) NSMutableArray *tweets;
 
 @end
 
@@ -27,15 +28,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    UIEdgeInsets inset = UIEdgeInsetsMake(44, 0, 0, 0);
+    self.homelineTableView.contentInset = inset;
+
     [self initializeTableView];
     [self initNavigationHeader];
 
     [self fetchTweets];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotNewTweet:) name:PostNewTweetNofication object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotNewTweet:) name:TweetUpdateNofication object:nil];
+
+    [self initInfiniteScroll];
+    [self initPullToRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Tweet refresher
+
+- (void)initInfiniteScroll {
+    [self.homelineTableView addInfiniteScrollingWithActionHandler:^{
+        Tweet *tweet = [self.tweets lastObject];
+        [self fetchTweets:tweet.tweetID];
+    }];
+}
+
+- (void)initPullToRefresh {
+    [self.homelineTableView addPullToRefreshWithActionHandler:^{
+        [self fetchTweets:nil];
+    }];
 }
 
 #pragma mark - Initializers
@@ -71,6 +93,7 @@
 
     UINavigationController *tweetDetailsNavigationController = [[UINavigationController alloc] initWithRootViewController:tweetDetailsViewController];
     [self presentViewController:tweetDetailsNavigationController animated:YES completion:nil];
+    CFRunLoopWakeUp(CFRunLoopGetCurrent());
 }
 
 #pragma mark - Tableview methods
@@ -99,21 +122,48 @@
 
 #pragma mark - API call
 
-- (void)fetchTweets {
-    [MBProgressHUD showHUDAddedTo:self.homelineTableView animated:YES];
+-(void)fetchTweets {
+    Tweet *lastTweet = [self.tweets lastObject];
+    [self fetchTweets:lastTweet.tweetID];
+}
 
-    [[TwitterClient sharedInstance] fetchTweetsWithCompletion:^(NSArray *tweets, NSError *error) {
+- (void)fetchTweets:(NSNumber *)lastTweetID {
+    if (!lastTweetID) {
+        [MBProgressHUD showHUDAddedTo:self.homelineTableView animated:YES];
+    }
+
+    NSDictionary *requestParams = @{@"count": @20};
+
+    if (lastTweetID) {
+        requestParams = @{@"count": @20, @"max_id": lastTweetID};
+    }
+    else {
+        requestParams = @{@"count": @20};
+    }
+
+    [[TwitterClient sharedInstance] fetchTweetsWithCompletion:requestParams completion:^(NSArray *tweets, NSError *error) {
+        runOnMainQueueWithoutDeadlocking(^{
+            [MBProgressHUD hideHUDForView:self.homelineTableView animated:YES];
+            [self.homelineTableView.infiniteScrollingView stopAnimating];
+            [self.homelineTableView.pullToRefreshView stopAnimating];
+
+        });
+
         if (tweets) {
             NSLog(@"[INFO] Fetched %lu tweets", (unsigned long)tweets.count);
-            self.tweets = tweets;
+
+            if (lastTweetID) {
+                [self.tweets addObjectsFromArray:tweets];
+            }
+            else {
+                self.tweets = [NSMutableArray arrayWithArray:tweets];
+            }
 
             [self.homelineTableView reloadData];
         }
         else {
             NSLog(@"[ERROR] Unable to load tweets");
         }
-
-        [MBProgressHUD hideHUDForView:self.homelineTableView animated:YES];
     }];
 }
 
@@ -124,12 +174,21 @@
 }
 
 - (void)gotNewTweet:(NSNotification *)notification {
-    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.tweets];
-    [tempArray insertObject:notification.userInfo[@"tweet"] atIndex:0];
-    self.tweets = [NSArray arrayWithArray:tempArray];
-    NSLog(@"[INFO] New tweet added to homeline");
+    if (notification.userInfo[@"tweet"]) {
+        [self.tweets insertObject:notification.userInfo[@"tweet"] atIndex:0];
+        NSLog(@"[INFO] New tweet added to homeline");
+    }
 
     [self.homelineTableView reloadData];
+}
+
+void runOnMainQueueWithoutDeadlocking(void (^block)(void)) {
+    if ([NSThread isMainThread]) {
+        block();
+    }
+    else {
+        dispatch_sync(dispatch_get_main_queue(), block);
+    }
 }
 
 @end

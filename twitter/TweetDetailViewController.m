@@ -87,16 +87,20 @@
     
     if (self.tweet.retweeted) {
         [self.retweetImage setImage:[UIImage imageNamed:@"RetweetOn"] forState:UIControlStateNormal];
+        self.retweetCountLabel.textColor = [UIColor colorWithRed:0.10 green:0.81 blue:0.53 alpha:1.0];
     }
     else {
         [self.retweetImage setImage:[UIImage imageNamed:@"Retweet"] forState:UIControlStateNormal];
+        self.retweetCountLabel.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
     }
     
     if (self.tweet.liked) {
         [self.likeImage setImage:[UIImage imageNamed:@"LikeOn"] forState:UIControlStateNormal];
+        self.likeCountLabel.textColor = [UIColor colorWithRed:0.91 green:0.11 blue:0.31 alpha:1.0];
     }
     else {
         [self.likeImage setImage:[UIImage imageNamed:@"Like"] forState:UIControlStateNormal];
+        self.likeCountLabel.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
     }
 }
 
@@ -110,8 +114,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onReply)];
 }
 
-- (void)initNewTweetView:(Tweet *)tweet {
-    NewTweetViewController *newTweetViewController = [[NewTweetViewController alloc] initWithTweet:tweet];
+- (void)initNewTweetView:(NSDictionary *)data {
+    NewTweetViewController *newTweetViewController = [[NewTweetViewController alloc] initWithDictionary:data];
     
     UINavigationController *newTweetNavigationController = [[UINavigationController alloc] initWithRootViewController:newTweetViewController];
     [self presentViewController:newTweetNavigationController animated:YES completion:nil];
@@ -124,29 +128,73 @@
 }
 
 - (void)onReply {
-    [self initNewTweetView:self.tweet];
-}
-
-- (void)onLike {
-    if (self.tweet.liked) {
-        return;
-    }
-
-    NSDictionary *tweetData = @{@"id": self.tweet.tweetID};
-    
-    [[TwitterClient sharedInstance] postLikeWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {
-        if (tweet) {
-            NSLog(@"[INFO] Tweet liked");
-            [self.likeImage setImage:[UIImage imageNamed:@"LikeOn"] forState:UIControlStateNormal];
-        }
-        else {
-            NSLog(@"[ERROR] Unable to post new tweet");
-        }
-    }];
+    [self initNewTweetView:@{@"tweet": self.tweet, @"replyTo": self.tweet.user.screenName}];
 }
 
 - (void)onRetweet {
-    [self initNewTweetView:self.tweet];
+    NSDictionary *tweetData = @{@"id": self.tweet.tweetID};
+    
+    if (self.tweet.retweeted) {
+        [[TwitterClient sharedInstance] destroyRetweetWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {
+            if (tweet) {
+                NSLog(@"[INFO] Retweet removed");
+                self.tweet.retweeted = NO;
+                self.tweet.retweetedCount = [NSNumber numberWithInt:[self.tweet.retweetedCount intValue] - 1];
+                [self viewDidLoad];
+                [[NSNotificationCenter defaultCenter] postNotificationName:TweetUpdateNofication object:nil];
+            }
+            else {
+                NSLog(@"[ERROR] Unable to remove retweet");
+            }
+        }];
+    }
+    else {
+        [[TwitterClient sharedInstance] postRetweetWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {
+            if (tweet) {
+                NSLog(@"[INFO] Retweeted");
+                self.tweet.retweeted = YES;
+                self.tweet.retweetedCount = [NSNumber numberWithInt:[self.tweet.retweetedCount intValue] + 1];
+                [self viewDidLoad];
+                [[NSNotificationCenter defaultCenter] postNotificationName:TweetUpdateNofication object:nil];
+            }
+            else {
+                NSLog(@"[ERROR] Unable to retweet");
+            }
+        }];
+    }
+}
+
+- (void)onLike {
+    NSDictionary *tweetData = @{@"id": self.tweet.tweetID};
+
+    if (self.tweet.liked) {
+        [[TwitterClient sharedInstance] destroyLikeWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {
+            if (tweet) {
+                NSLog(@"[INFO] Tweet unliked");
+                self.tweet.liked = NO;
+                self.tweet.likedCount = [NSNumber numberWithInt:[self.tweet.likedCount intValue] - 1];
+                [self viewDidLoad];
+                [[NSNotificationCenter defaultCenter] postNotificationName:TweetUpdateNofication object:nil];
+            }
+            else {
+                NSLog(@"[ERROR] Unable to post new tweet");
+            }
+        }];
+    }
+    else {
+        [[TwitterClient sharedInstance] postLikeWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {
+            if (tweet) {
+                NSLog(@"[INFO] Tweet liked");
+                self.tweet.liked = YES;
+                self.tweet.likedCount = [NSNumber numberWithInt:[self.tweet.likedCount intValue] + 1];
+                [self viewDidLoad];
+                [[NSNotificationCenter defaultCenter] postNotificationName:TweetUpdateNofication object:nil];
+            }
+            else {
+                NSLog(@"[ERROR] Unable to post new tweet");
+            }
+        }];
+    }
 }
 
 - (IBAction)onRetweetButtonTouch:(id)sender {
@@ -160,4 +208,5 @@
 - (IBAction)onReplyButtonTouch:(id)sender {
     [self onReply];
 }
+
 @end

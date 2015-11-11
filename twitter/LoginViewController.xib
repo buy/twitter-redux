@@ -14,16 +14,27 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GwK-PR-0cx">
-                    <rect key="frame" x="99" y="200" width="122" height="30"/>
-                    <state key="normal" title="Login with Twitter"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GwK-PR-0cx">
+                    <rect key="frame" x="38" y="200" width="246" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="EbW-ZV-0qF"/>
+                        <constraint firstAttribute="width" constant="246" id="GDE-UL-uE0"/>
+                    </constraints>
+                    <state key="normal" title="Login with Twitter" image="TwitterLogin"/>
                     <connections>
                         <action selector="onLogin:" destination="-1" eventType="touchUpInside" id="Icy-VT-yxg"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.75294117647058822" green="0.87058823529411766" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="GwK-PR-0cx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="200" id="Pvh-jv-uxo"/>
+                <constraint firstItem="GwK-PR-0cx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="1" id="bP7-98-Lv1"/>
+            </constraints>
             <point key="canvasLocation" x="305" y="379"/>
         </view>
     </objects>
+    <resources>
+        <image name="TwitterLogin" width="492" height="108"/>
+    </resources>
 </document>

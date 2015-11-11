@@ -14,12 +14,21 @@
 
 + (TwitterClient *)sharedInstance;
 - (void)openURL:(NSURL *)url;
-- (void)loginWithCompletion:(void (^)(User *user, NSError *error))completion;
-- (void)fetchTweetsWithCompletion:(void (^)(NSArray *tweets, NSError *error))completion;
 
+- (void)loginWithCompletion:(void (^)(User *user, NSError *error))completion;
+- (void)fetchTweetsWithCompletion:(NSDictionary *)dictionary
+                       completion:(void (^)(NSArray *tweets, NSError *error))completion;
 - (void)postTweetWithCompletion:(NSDictionary *)dictionary
                      completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)destroyTweetWithCompletion:(NSDictionary *)dictionary
+                        completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)postLikeWithCompletion:(NSDictionary *)dictionary
                      completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)destroyLikeWithCompletion:(NSDictionary *)dictionary
+                    completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)postRetweetWithCompletion:(NSDictionary *)dictionary
+                       completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)destroyRetweetWithCompletion:(NSDictionary *)dictionary
+                       completion:(void (^)(Tweet *tweet, NSError *error))completion;
 
 @end

@@ -19,7 +19,6 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 @property (nonatomic, strong) void (^loginCompletion)(User *user, NSError *error);
 @property (nonatomic, strong) void (^fetchTweetsCompletion)(NSArray *tweets, NSError *error);
 @property (nonatomic, strong) void (^postTweetCompletion)(Tweet *tweet, NSError *error);
-@property (nonatomic, strong) void (^postLikeCompletion)(Tweet *tweet, NSError *error);
 
 @end
 
@@ -58,15 +57,21 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)fetchTweetsWithCompletion:(void (^)(NSArray *tweets, NSError *error))completion {
+- (void)fetchTweetsWithCompletion:(NSDictionary *)dictionary
+                       completion:(void (^)(NSArray *tweets, NSError *error))completion {
     self.fetchTweetsCompletion = completion;
 
-    [self GET:@"1.1/statuses/home_timeline.json" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    [self GET:@"1.1/statuses/home_timeline.json" parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+
+        NSLog(@"[INFO] Start fetching the tweets ...");
         NSArray *tweets = [Tweet tweetsWithArray:responseObject];
         self.fetchTweetsCompletion(tweets, nil);
+
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+
         NSLog(@"[ERROR] Failed fetching the tweets: %@", error);
         self.fetchTweetsCompletion(nil, error);
+
     }];
 }
 
@@ -76,12 +81,73 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     self.postTweetCompletion = completion;
 
     [self POST:@"1.1/statuses/update.json" parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+
         Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
         NSLog(@"%@", tweet);
         self.postTweetCompletion(tweet, nil);
+
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+
         NSLog(@"[ERROR] Failed posting tweet: %@", error);
         self.postTweetCompletion(nil, error);
+
+    }];
+}
+
+- (void)destroyTweetWithCompletion:(NSDictionary *)dictionary
+                       completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    
+    self.postTweetCompletion = completion;
+    
+    [self POST:[NSString stringWithFormat:@"1.1/statuses/destroy/%@.json", dictionary[@"id"]] parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+
+        Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+        NSLog(@"[INFO] Successfully removed tweet");
+        self.postTweetCompletion(tweet, nil);
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+
+        NSLog(@"[ERROR] Failed removing the tweet: %@", error);
+        self.postTweetCompletion(nil, error);
+
+    }];
+}
+
+- (void)postRetweetWithCompletion:(NSDictionary *)dictionary
+                    completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    
+    self.postTweetCompletion = completion;
+    
+    [self POST:[NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", dictionary[@"id"]] parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+
+        Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+        NSLog(@"[INFO] Successfully retweeted");
+        self.postTweetCompletion(tweet, nil);
+
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+
+        NSLog(@"[ERROR] Failed retweeting the tweet: %@", error);
+        self.postTweetCompletion(nil, error);
+
+    }];
+}
+
+- (void)destroyRetweetWithCompletion:(NSDictionary *)dictionary
+                        completion:(void (^)(Tweet *tweet, NSError *error))completion {
+    
+    self.postTweetCompletion = completion;
+
+    [self GET:[NSString stringWithFormat:@"1.1/statuses/show/%@.json?include_my_retweet=1", dictionary[@"id"]] parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+
+        NSNumber *retweetID = responseObject[@"current_user_retweet"][@"id_str"];
+        NSLog(@"[INFO] Retweet found: %@", retweetID);
+
+        [self destroyTweetWithCompletion:@{@"id": retweetID} completion:self.postTweetCompletion];
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+
+        NSLog(@"[ERROR] Failed fetching the tweet: %@", error);
+        self.postTweetCompletion(nil, error);
+
     }];
 }
 
@@ -92,10 +158,25 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     
     [self POST:@"1.1/favorites/create.json" parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
-        NSLog(@"[INFO] Successfully liked");
+        NSLog(@"[INFO] Tweet successfully liked");
         self.postTweetCompletion(tweet, nil);
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        NSLog(@"[ERROR] Failed posting tweet: %@", error);
+        NSLog(@"[ERROR] Failed liking the tweet: %@", error);
+        self.postTweetCompletion(nil, error);
+    }];
+}
+
+- (void)destroyLikeWithCompletion:(NSDictionary *)dictionary
+                    completion:(void (^)(Tweet *tweet, NSError *error))completion {
+
+    self.postTweetCompletion = completion;
+    
+    [self POST:@"1.1/favorites/destroy.json" parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        Tweet *tweet = [[Tweet alloc] initWithDictionary:responseObject];
+        NSLog(@"[INFO] Tweet successfully unliked");
+        self.postTweetCompletion(tweet, nil);
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        NSLog(@"[ERROR] Failed unliking the tweet: %@", error);
         self.postTweetCompletion(nil, error);
     }];
 }
@@ -110,8 +191,6 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         self.loginCompletion(nil, error);
     }];
 }
-
-#pragma mark - Private methods
 
 - (void)fetchUser {
     [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
