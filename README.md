@@ -1,39 +1,34 @@
 # Twitter App
 
-This is a Twitter app for iOS as the [week 3 assignment](https://courses.codepath.com/courses/intro_to_ios/unit/3#!assignment) of CodePath.
+This is a Twitter app for iOS as the [week 4 assignment](https://courses.codepath.com/courses/intro_to_ios/unit/4#!assignment) of CodePath.
 
-Time spent: 39 hours
+Time spent: 0 hours
 
-### Required:
-- [x] User can sign in using OAuth login flow
-- [x] User can view last 20 tweets from their home timeline
-- [x] The current signed in user will be persisted across restarts
-- [x] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp. In other words, design the custom cell with the proper Auto Layout settings. You will also need to augment the model classes.
-- [x] User can pull to refresh
-- [x] User can compose a new tweet by tapping on a compose button.
-- [x] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+### Hamburger menu
+- [ ] Dragging anywhere in the view should reveal the menu.
+- [ ] The menu should include links to your profile, the home timeline, and the mentions view.
+- [ ] The menu can look similar to the LinkedIn menu below or feel free to take liberty with the UI.
+### Profile page
+- [ ] Contains the user header view
+- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
+- [ ] Optional: Implement the paging view for the user description.
+- [ ] Optional: As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
+- [ ] Optional: Pulling down the profile page should blur and resize the header image.
 
-### Optional:
-- [x] When composing, you should have a countdown in the upper right for the tweet limit.
-- [x] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
-- [x] Retweeting and favoriting should increment the retweet and favorite count.
-- [x] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count. Refer to this guide for help on implementing unretweeting.
-- [x] Replies should be prefixed with the username and the reply_id should be set when posting the tweet,
-- [x] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
+### Home Timeline
+- [ ] Tapping on a user image should bring up that user's profile page
+
+### Optional: Account switching
+- [ ] Long press on tab bar to bring up Account view with animation
+- [ ] Tap account to switch to
+- [ ] Include a plus button to Add an Account
+- [ ] Swipe to delete an account
 
 ### Additional:
-- [x] App icon
-- [x] Advanced UI
-- [x] User can not retweet his own tweet, retweet button will be greyed out in detailed view
-- [x] Disable Tweet button when tweet is more than 140 chars
-- [x] Color / grey icon based on tweet data
-- [x] Icon notification when user compose tweet in Reply mode
-- [x] Retweet icon at top of a tweet if the tweet is a retweet
-- [x] Network error notification/handler
-- [x] Progress bar when loading the data
+TBD
 
 ### Video Walkthrough
-![Video Walkthrough](https://github.com/buy/twitter/blob/master/Demo/twitter_demo.gif?raw=true)
+![Video Walkthrough](TBD)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/)
 
