@@ -72,16 +72,20 @@
 
     if (self.tweet.retweeted) {
         self.retweetImage.image = [UIImage imageNamed:@"RetweetOn"];
+        self.retweetCountLabel.textColor = [UIColor colorWithRed:0.10 green:0.81 blue:0.53 alpha:1.0];
     }
     else {
         self.retweetImage.image = [UIImage imageNamed:@"Retweet"];
+        self.retweetCountLabel.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
     }
 
     if (self.tweet.liked) {
         self.likeImage.image = [UIImage imageNamed:@"LikeOn"];
+        self.likeCountLabel.textColor = [UIColor colorWithRed:0.91 green:0.11 blue:0.31 alpha:1.0];
     }
     else {
         self.likeImage.image = [UIImage imageNamed:@"Like"];
+        self.likeCountLabel.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
     }
 }
 

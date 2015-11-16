@@ -34,7 +34,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" text="Chang Liu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoE-hj-Mmj">
-                            <rect key="frame" x="66" y="8" width="60.5" height="20"/>
+                            <rect key="frame" x="66" y="8" width="61" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="VIc-AR-U43"/>
                                 <constraint firstAttribute="height" constant="20" id="bI4-LP-b5m"/>
@@ -48,7 +48,7 @@
                             </variation>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="@ChangLiu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17c-OY-3Bv">
-                            <rect key="frame" x="66" y="28" width="64.5" height="20"/>
+                            <rect key="frame" x="66" y="28" width="65" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="NKP-Bo-lpP"/>
                                 <constraint firstAttribute="height" constant="20" id="ij8-D1-BZG"/>
@@ -86,8 +86,8 @@
                                 <constraint firstAttribute="width" constant="19" id="xYE-Uc-WDk"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdq-Hc-3TN">
-                            <rect key="frame" x="145.5" y="308.5" width="34.5" height="24"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdq-Hc-3TN">
+                            <rect key="frame" x="146" y="309" width="35" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <color key="textColor" red="0.53333333333333333" green="0.59999999999999998" blue="0.65098039215686276" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
