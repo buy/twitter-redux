@@ -28,6 +28,7 @@ Time spent: 16 hours
 ### Additional:
 - [x] Advanced UI
 - [x] Reuse home timeline controller and added it as a subview when rendering profile page
+- [x] Reuse home timeline view and controller for mentions view
 - [x] Menu button on each content view, handled in hamburger view controller via NSNotificationCenter
 
 ### Video Walkthrough
