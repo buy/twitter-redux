@@ -62,6 +62,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Initializers
+
 - (void)initViewWithTweet:(Tweet *)tweet {
     if (self.tweet.retweetedStatus) {
         tweet = tweet.retweetedStatus;
@@ -84,7 +86,7 @@
     self.retweetCountLabel.hidden = [tweet.retweetedCount intValue] == 0;
     self.likeCountLabel.text = [NSString stringWithFormat:@"%@", tweet.likedCount];
     self.likeCountLabel.hidden = [tweet.likedCount intValue] == 0;
-
+    
     if (self.tweet.user.userID == [User currentUser].userID) {
         [self.retweetImage setImage:[UIImage imageNamed:@"RetweetUnavailable"] forState:UIControlStateNormal];
         [self.retweetImage setEnabled:NO];
@@ -110,9 +112,6 @@
         self.likeCountLabel.textColor = [UIColor colorWithRed:0.67 green:0.72 blue:0.76 alpha:1.0];
     }
 }
-
-
-#pragma mark - Initializers
 
 - (void)initNavigationHeader {
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;

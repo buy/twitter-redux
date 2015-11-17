@@ -114,7 +114,7 @@
     return cell;
 }
 
-- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
     Tweet *tweet = self.tweets[indexPath.row];
 
     [self initTweetDetailsView:tweet];

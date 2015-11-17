@@ -53,12 +53,7 @@ NSString * const TweetUpdateNofication = @"PostNewTweetNofication";
         self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self initNavigationHeader];
-    User *user = [User currentUser];
-    
-    [self.profileImage setImageWithURL:[NSURL URLWithString:user.profileImageURL]];
-    self.profileImage.layer.cornerRadius = 5;
-    self.nameLabel.text = user.name;
-    self.screenNameLabel.text = user.screenName;
+    [self loadUser];
 
     if (self.replyTo) {
         self.replyImage.hidden = NO;
@@ -90,6 +85,7 @@ NSString * const TweetUpdateNofication = @"PostNewTweetNofication";
     User *user = [User currentUser];
 
     [self.profileImage setImageWithURL:[NSURL URLWithString:user.profileImageURL]];
+    self.profileImage.layer.cornerRadius = 5;
     self.nameLabel.text = user.name;
     self.screenNameLabel.text = user.screenName;
 }
@@ -112,7 +108,6 @@ NSString * const TweetUpdateNofication = @"PostNewTweetNofication";
     }
     else {
         tweetData = @{@"status": self.statusText.text};
-
     }
 
     [[TwitterClient sharedInstance] postTweetWithCompletion:tweetData completion:^(Tweet *tweet, NSError *error) {

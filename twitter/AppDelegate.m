@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "HamburgerViewController.h"
 #import "HomeTimelineViewController.h"
+#import "MenuViewController.h"
 #import "User.h"
 #import "TwttierClient.h"
 
@@ -75,7 +77,7 @@
 
     if (user) {
         NSLog(@"[INFO] Welcome %@", user.name);
-        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[HomeTimelineViewController alloc] init]];
+        self.window.rootViewController = [[HamburgerViewController alloc] init];
     } else {
         NSLog(@"[INFO] Not logged in");
         self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];

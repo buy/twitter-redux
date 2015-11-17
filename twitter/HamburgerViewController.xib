@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HamburgerViewController">
+            <connections>
+                <outlet property="contentView" destination="MgI-K6-rSq" id="HxQ-Ge-c7E"/>
+                <outlet property="contentViewLeftMargin" destination="AtO-WM-KOl" id="9CH-4s-3zD"/>
+                <outlet property="menuView" destination="Fux-l5-f9N" id="liT-0O-PHw"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fux-l5-f9N" userLabel="MenuView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MgI-K6-rSq" userLabel="ContentView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="XwT-Pi-pYK" appends="YES" id="nD0-fh-n3w"/>
+                    </connections>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Fux-l5-f9N" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3bi-KL-QdG"/>
+                <constraint firstAttribute="trailing" secondItem="Fux-l5-f9N" secondAttribute="trailing" id="7M8-oQ-lAt"/>
+                <constraint firstItem="MgI-K6-rSq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ArC-o4-Ju3"/>
+                <constraint firstItem="MgI-K6-rSq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AtO-WM-KOl"/>
+                <constraint firstItem="Fux-l5-f9N" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Axe-1N-eLg"/>
+                <constraint firstAttribute="bottom" secondItem="MgI-K6-rSq" secondAttribute="bottom" id="WhB-LW-kEc"/>
+                <constraint firstItem="MgI-K6-rSq" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="a4x-aQ-kld"/>
+                <constraint firstAttribute="bottom" secondItem="Fux-l5-f9N" secondAttribute="bottom" id="jqj-Fy-OxO"/>
+            </constraints>
+            <point key="canvasLocation" x="556" y="576"/>
+        </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="XwT-Pi-pYK">
+            <connections>
+                <action selector="onContentPanGuesture:" destination="-1" id="mX3-Lm-ZkU"/>
+            </connections>
+        </panGestureRecognizer>
+    </objects>
+</document>
