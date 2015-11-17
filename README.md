@@ -2,7 +2,7 @@
 
 This is a Twitter app for iOS as the [week 4 assignment](https://courses.codepath.com/courses/intro_to_ios/unit/4#!assignment) of CodePath.
 
-Time spent: 15 hours
+Time spent: 16 hours
 
 ### Hamburger menu
 - [x] Dragging anywhere in the view should reveal the menu.
