@@ -2,7 +2,7 @@
 
 This is a Twitter app for iOS as the [week 4 assignment](https://courses.codepath.com/courses/intro_to_ios/unit/4#!assignment) of CodePath.
 
-Time spent: 1 hours
+Time spent: 15 hours
 
 ### Hamburger menu
 - [x] Dragging anywhere in the view should reveal the menu.
@@ -31,7 +31,7 @@ Time spent: 1 hours
 - [x] Menu button on each content view, handled in hamburger view controller via NSNotificationCenter
 
 ### Video Walkthrough
-![Video Walkthrough](TBD)
+![Video Walkthrough](https://github.com/buy/twitter-redux/blob/master/Demo/twitter_demo.gif?raw=true)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/)
 
