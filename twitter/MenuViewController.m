@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "HomeTimelineViewController.h"
+#import "ProfileViewController.h"
 #import "User.h"
 #import "MenuCell.h"
 #import "UIImageView+AFNetworking.h"
@@ -22,6 +23,8 @@
 @property (strong, nonatomic) UIViewController *profileViewController;
 @property (strong, nonatomic) UIViewController *homeTimelineViewController;
 @property (strong, nonatomic) NSMutableArray *contentViewControllerArray;
+
+- (IBAction)onLogout:(id)sender;
 
 @end
 
@@ -52,9 +55,14 @@
 
 - (void)initContentViewControllers {
     self.homeTimelineViewController = [[UINavigationController alloc] initWithRootViewController:[[HomeTimelineViewController alloc] init]];
+    self.profileViewController = [[UINavigationController alloc] initWithRootViewController:[[ProfileViewController alloc] init]];
+
     self.contentViewControllerArray = [[NSMutableArray alloc] init];
 
-    [self.contentViewControllerArray addObject:@{@"icon":@"TwitterMenu", @"label":@"Home", @"controller": self.homeTimelineViewController}];
+    [self.contentViewControllerArray addObjectsFromArray:@[
+                @{@"icon":@"TwitterMenu", @"label":@"Home Timeline", @"controller": self.homeTimelineViewController},
+                @{@"icon":@"Profile", @"label":@"Profile", @"controller": self.profileViewController}
+    ]];
 
     self.hamburgerViewController.contentViewController = self.homeTimelineViewController;
 }
@@ -74,7 +82,7 @@
 #pragma mark - Tableview methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.contentViewControllerArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -92,5 +100,8 @@
     self.hamburgerViewController.contentViewController = self.contentViewControllerArray[indexPath.row][@"controller"];
 }
 
+- (IBAction)onLogout:(id)sender {
+    [User logout];
+}
 
 @end

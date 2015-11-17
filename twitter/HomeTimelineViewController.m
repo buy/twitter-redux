@@ -16,20 +16,32 @@
 #import "MBProgressHUD.h"
 #import "SVPullToRefresh.h"
 
+NSString * const OnMenuButtonNotification = @"OnMenuButtonNotification";
+
 @interface HomeTimelineViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *homelineTableView;
 @property (strong, nonatomic) NSMutableArray *tweets;
+@property (weak, nonatomic) NSString *userID;
 
 @end
 
 @implementation HomeTimelineViewController
 
+- (instancetype)initWithDictionary:(NSDictionary *)data {
+    self = [super init];
+
+    if (self) {
+        self.userID = data[@"user_id"];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    UIEdgeInsets inset = UIEdgeInsetsMake(44, 0, 0, 0);
-    self.homelineTableView.contentInset = inset;
+//    UIEdgeInsets inset = UIEdgeInsetsMake(64, 0, 0, 0);
+//    self.homelineTableView.contentInset = inset;
 
     [self initializeTableView];
     [self initNavigationHeader];
@@ -55,9 +67,9 @@
 }
 
 - (void)initPullToRefresh {
-    [self.homelineTableView addPullToRefreshWithActionHandler:^{
-        [self fetchTweets:nil];
-    }];
+//    [self.homelineTableView addPullToRefreshWithActionHandler:^{
+//        [self fetchTweets:nil];
+//    }];
 }
 
 #pragma mark - Initializers
@@ -77,7 +89,13 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onLogoutButton)];
+
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    [settingsView addTarget:self action:@selector(onMenuButton) forControlEvents:UIControlEventTouchUpInside];
+    [settingsView setBackgroundImage:[UIImage imageNamed:@"MenuIcon"] forState:UIControlStateNormal];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
+    self.navigationItem.leftBarButtonItem = settingsButton;
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self action:@selector(initNewTweetView)];
 }
 
@@ -132,13 +150,14 @@
         [MBProgressHUD showHUDAddedTo:self.homelineTableView animated:YES];
     }
 
-    NSDictionary *requestParams = @{@"count": @20};
+    NSMutableDictionary *requestParams = [[NSMutableDictionary alloc] initWithDictionary:@{@"count": @20}];
 
     if (lastTweetID) {
-        requestParams = @{@"count": @20, @"max_id": lastTweetID};
+        [requestParams setObject:lastTweetID forKey:@"max_id"];
     }
-    else {
-        requestParams = @{@"count": @20};
+
+    if (self.userID) {
+        [requestParams setObject:self.userID forKey:@"user_id"];
     }
 
     [[TwitterClient sharedInstance] fetchTweetsWithCompletion:requestParams completion:^(NSArray *tweets, NSError *error) {
@@ -169,8 +188,8 @@
 
 #pragma mark - Private methods
 
-- (void)onLogoutButton {
-    [User logout];
+- (void)onMenuButton {
+    [[NSNotificationCenter defaultCenter] postNotificationName:OnMenuButtonNotification object:nil];
 }
 
 - (void)gotNewTweet:(NSNotification *)notification {

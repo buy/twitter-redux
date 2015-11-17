@@ -5,19 +5,19 @@ This is a Twitter app for iOS as the [week 4 assignment](https://courses.codepat
 Time spent: 1 hours
 
 ### Hamburger menu
-- [ ] Dragging anywhere in the view should reveal the menu.
-- [ ] The menu should include links to your profile, the home timeline, and the mentions view.
-- [ ] The menu can look similar to the LinkedIn menu below or feel free to take liberty with the UI.
+- [x] Dragging anywhere in the view should reveal the menu.
+- [x] The menu should include links to your profile, the home timeline, and the mentions view.
+- [x] The menu can look similar to the LinkedIn menu below or feel free to take liberty with the UI.
 
 ### Profile page
-- [ ] Contains the user header view
-- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
+- [x] Contains the user header view
+- [x] Contains a section with the users basic stats: # tweets, # following, # followers
 - [ ] Optional: Implement the paging view for the user description.
 - [ ] Optional: As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
 - [ ] Optional: Pulling down the profile page should blur and resize the header image.
 
 ### Home Timeline
-- [ ] Tapping on a user image should bring up that user's profile page
+- [x] Tapping on a user image should bring up that user's profile page
 
 ### Optional: Account switching
 - [ ] Long press on tab bar to bring up Account view with animation
@@ -26,7 +26,9 @@ Time spent: 1 hours
 - [ ] Swipe to delete an account
 
 ### Additional:
-TBD
+- [x] Advanced UI
+- [x] Reuse home timeline controller and added it as a subview when rendering profile page
+- [x] Menu button on each content view, handled in hamburger view controller via NSNotificationCenter
 
 ### Video Walkthrough
 ![Video Walkthrough](TBD)

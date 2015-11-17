@@ -8,7 +8,10 @@
 
 #import "TweetCell.h"
 #import "Tweet.h"
+#import "ProfileViewController.h"
 #import "UIImageView+AFNetworking.h"
+
+NSString * const OnNewProfileRequestNotification = @"OnNewProfileRequestNotification";
 
 @interface TweetCell ()
 
@@ -23,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *retweetImage;
 @property (weak, nonatomic) IBOutlet UIImageView *likeImage;
+
+- (IBAction)onProfileImageTap:(id)sender;
 
 @end
 
@@ -102,4 +107,15 @@
     [self.tweetTextLabel sizeToFit];
 }
 
+- (IBAction)onProfileImageTap:(id)sender {
+    NSString *userID;
+
+    if (self.tweet.retweetedStatus) {
+        userID = [NSString stringWithFormat:@"%@", self.tweet.retweetedStatus.user.userID];
+    }
+    else {
+        userID = [NSString stringWithFormat:@"%@", self.tweet.user.userID];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:OnNewProfileRequestNotification object:nil userInfo:@{@"user_id": self.tweet.user.userID}];
+}
 @end

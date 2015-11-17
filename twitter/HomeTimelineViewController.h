@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString * const OnMenuButtonNotification;
+
 @interface HomeTimelineViewController : UIViewController
+
+@property (strong, nonatomic) IBOutlet UITableView *homelineTableView;
+
+- (instancetype)initWithDictionary:(NSDictionary *)data;
 
 @end

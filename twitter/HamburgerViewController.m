@@ -7,14 +7,15 @@
 //
 
 #import "HamburgerViewController.h"
+#import "HomeTimelineViewController.h"
 #import "MenuViewController.h"
+#import "ProfileViewController.h"
+#import "TweetCell.h"
 
 @interface HamburgerViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIView *menuView;
-
-@property (weak, nonatomic) UINavigationController *menuViewController;
 
 @end
 
@@ -27,6 +28,9 @@ CGFloat originalContentViewLeftMargin;
 
     [self initMenuView];
     [self initContentView];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleMenu) name:OnMenuButtonNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newProfileRequest:) name:OnNewProfileRequestNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,10 +40,9 @@ CGFloat originalContentViewLeftMargin;
 
 # pragma mark - Initializers
 
+//need to wait for viewDidLoad before running this, thus couldn't use a setter
 - (void)initMenuView {
-    MenuViewController *menuViewController = [[MenuViewController alloc] init];
-    menuViewController.hamburgerViewController = self;
-    [self.menuView addSubview:menuViewController.view];
+    [self.menuView addSubview:self.menuViewController.view];
 }
 
 - (void)initContentView {
@@ -49,11 +52,22 @@ CGFloat originalContentViewLeftMargin;
     self.contentView.layer.shadowOpacity = 0.5;
 }
 
-- (void) setContentViewController:(UIViewController *)contentViewController {
-    _contentViewController = contentViewController;
 
-    [self.view layoutIfNeeded];
+- (void)setContentViewController:(UIViewController *)contentViewController {
+    _contentViewController = contentViewController;
     [self.contentView addSubview:contentViewController.view];
+
+    if (contentViewController) {
+        [contentViewController willMoveToParentViewController:nil];
+        [contentViewController.view removeFromSuperview];
+        [contentViewController didMoveToParentViewController:nil];
+    }
+
+    [self.contentViewController willMoveToParentViewController:self];
+    [self.contentView addSubview:contentViewController.view];
+    [self.contentViewController didMoveToParentViewController:self];
+    
+    [self hideMenu];
 }
 
 # pragma mark - Guesture handler
@@ -64,37 +78,60 @@ CGFloat originalContentViewLeftMargin;
     if (sender.state == UIGestureRecognizerStateBegan) {
         originalContentViewLeftMargin = self.contentViewLeftMargin.constant;
     } else if (sender.state == UIGestureRecognizerStateChanged) {
-        if (self.contentViewLeftMargin.constant > 0) {
+        if ((self.contentViewLeftMargin.constant >= 0 && translation.x > 0) || (self.contentViewLeftMargin.constant > 0 && translation.x < 0)) {
             self.contentViewLeftMargin.constant = originalContentViewLeftMargin + translation.x;
         }
     } else if (sender.state == UIGestureRecognizerStateEnded) {
-        [UIView animateWithDuration:0.5
-                              delay:0
-             usingSpringWithDamping:0.6
-              initialSpringVelocity:0.8
-                            options:UIViewAnimationOptionAllowAnimatedContent
-                         animations:^{
-                             if (translation.x > 0) {
-                                 [self showMenu];
-                             }
-                             else {
-                                 [self hideMenu];
-                             }
-
-                             [self.view layoutIfNeeded];
-                         }
-                         completion:nil];
+        if (translation.x > 0) {
+            [self showMenu];
+        }
+        else {
+            [self hideMenu];
+        }
     }
 }
 
-# pragma mark - Private methods
+# pragma mark - Menu animation
 
 - (void)showMenu {
-    self.contentViewLeftMargin.constant = self.contentView.frame.size.width - 100;
+    [UIView animateWithDuration:0.5
+                          delay:0
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:0.8
+                        options:UIViewAnimationOptionAllowAnimatedContent
+                     animations:^{
+                         self.contentViewLeftMargin.constant = self.contentView.frame.size.width - 100;
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:nil];
 }
 
 - (void)hideMenu {
-    self.contentViewLeftMargin.constant = 0;
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.contentViewLeftMargin.constant = 0;
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:nil];
+}
+
+- (void)toggleMenu {
+    if (self.contentViewLeftMargin.constant > 0) {
+        [self hideMenu];
+    }
+    else {
+        [self showMenu];
+    }
+}
+
+# pragma Private method
+
+- (void)newProfileRequest:(NSNotification *)notification {
+    if (notification.userInfo[@"user_id"]) {
+        self.contentViewController = [[UINavigationController alloc] initWithRootViewController:[[ProfileViewController alloc] initWithDictionary:notification.userInfo]];
+
+         NSLog(@"[INFO] New profile request received");
+    }
 }
 
 @end

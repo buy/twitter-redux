@@ -31,6 +31,10 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
         self.screenName = [NSString stringWithFormat:@"@%@", dictionary[@"screen_name"]];
         self.profileImageURL = dictionary[@"profile_image_url"];
         self.tagLine = dictionary[@"tagLine"];
+        self.followersCount = [NSString stringWithFormat:@"%@", dictionary[@"followers_count"]];
+        self.followingCount = [NSString stringWithFormat:@"%@", dictionary[@"friends_count"]];
+        self.statusesCount = [NSString stringWithFormat:@"%@", dictionary[@"statuses_count"]];
+        self.backgroundImageURL = dictionary[@"profile_background_image_url_https"];
     }
     
     return self;
@@ -60,6 +64,13 @@ NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (void)getUserWithUserID:(NSString *)userID
+                 completion:(void (^)(User *user, NSError *error))completion{
+    [[TwitterClient sharedInstance] fetchUserWithCompletion:userID completion:^(User *user, NSError *error) {
+        completion(user, error);
+    }];
 }
 
 + (void)logout {

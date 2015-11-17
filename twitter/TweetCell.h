@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
 
+extern NSString * const OnNewProfileRequestNotification;
+
 @interface TweetCell : UITableViewCell
 
 @property (strong, nonatomic) Tweet *tweet;

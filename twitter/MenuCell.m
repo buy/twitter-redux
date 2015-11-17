@@ -23,9 +23,8 @@
 - (void)setData:(NSDictionary *)data {
     _data = data;
 
-    NSLog(@"%@", data[@"label"]);
     [self.iconImage setImage:[UIImage imageNamed:data[@"icon"]]];
-    self.label = data[@"label"];
+    self.label.text = data[@"label"];
 }
 
 @end

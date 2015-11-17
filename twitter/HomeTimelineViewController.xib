@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeTimelineViewController">
             <connections>
-                <outlet property="homelineTableView" destination="WeF-Uc-Bc4" id="V5x-w9-Mkq"/>
+                <outlet property="homelineTableView" destination="WeF-Uc-Bc4" id="cRp-rP-4Ax"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

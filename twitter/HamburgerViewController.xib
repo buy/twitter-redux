@@ -26,7 +26,7 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <gestureRecognizers/>
                     <connections>
-                        <outletCollection property="gestureRecognizers" destination="XwT-Pi-pYK" appends="YES" id="nD0-fh-n3w"/>
+                        <outletCollection property="gestureRecognizers" destination="N4y-1q-Dv1" appends="YES" id="dFk-tQ-K3Y"/>
                     </connections>
                 </view>
             </subviews>
@@ -43,9 +43,9 @@
             </constraints>
             <point key="canvasLocation" x="556" y="576"/>
         </view>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="XwT-Pi-pYK">
+        <panGestureRecognizer minimumNumberOfTouches="1" id="N4y-1q-Dv1">
             <connections>
-                <action selector="onContentPanGuesture:" destination="-1" id="mX3-Lm-ZkU"/>
+                <action selector="onContentPanGuesture:" destination="-1" id="Q7X-bm-XjV"/>
             </connections>
         </panGestureRecognizer>
     </objects>

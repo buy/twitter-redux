@@ -30,5 +30,6 @@
                        completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)destroyRetweetWithCompletion:(NSDictionary *)dictionary
                        completion:(void (^)(Tweet *tweet, NSError *error))completion;
-
+- (void)fetchUserWithCompletion:(NSString *)userID
+                     completion:(void (^)(User *user, NSError *error))completion;
 @end

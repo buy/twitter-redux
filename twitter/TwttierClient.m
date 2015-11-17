@@ -61,7 +61,13 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
                        completion:(void (^)(NSArray *tweets, NSError *error))completion {
     self.fetchTweetsCompletion = completion;
 
-    [self GET:@"1.1/statuses/home_timeline.json" parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    NSString *requestURL = @"1.1/statuses/home_timeline.json";
+
+    if (dictionary[@"user_id"]) {
+        requestURL = @"1.1/statuses/user_timeline.json";
+    }
+
+    [self GET:requestURL parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
 
         NSLog(@"[INFO] Start fetching the tweets ...");
         NSArray *tweets = [Tweet tweetsWithArray:responseObject];
@@ -191,6 +197,19 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         self.loginCompletion(nil, error);
     }];
 }
+
+- (void)fetchUserWithCompletion:(NSString *)userID
+                     completion:(void (^)(User *user, NSError *error))completion {
+    [self GET:@"1.1/users/show.json" parameters:@{@"user_id": userID} success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        User *user = [[User alloc] initWithDictionary:responseObject];
+        NSLog(@"[INFO] Got user: %@", user);
+        completion(user, nil);
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        NSLog(@"[ERROR] Failed getting the user: %@", error);
+        completion(nil, error);
+    }];
+}
+
 
 - (void)fetchUser {
     [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {

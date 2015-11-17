@@ -77,7 +77,12 @@
 
     if (user) {
         NSLog(@"[INFO] Welcome %@", user.name);
-        self.window.rootViewController = [[HamburgerViewController alloc] init];
+        HamburgerViewController *hamburgerViewController = [[HamburgerViewController alloc] init];
+        MenuViewController *menuViewController = [[MenuViewController alloc] init];
+        hamburgerViewController.menuViewController = menuViewController;
+        menuViewController.hamburgerViewController = hamburgerViewController;
+
+        self.window.rootViewController = hamburgerViewController;
     } else {
         NSLog(@"[INFO] Not logged in");
         self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];

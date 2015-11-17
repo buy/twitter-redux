@@ -30,6 +30,8 @@
 		49F8CA421BF9C3F40087CE08 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49F8CA401BF9C3F40087CE08 /* MenuViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		49F8CA461BF9C41A0087CE08 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F8CA441BF9C41A0087CE08 /* MenuCell.m */; settings = {ASSET_TAGS = (); }; };
 		49F8CA471BF9C41A0087CE08 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49F8CA451BF9C41A0087CE08 /* MenuCell.xib */; settings = {ASSET_TAGS = (); }; };
+		49F8CA4B1BFAEF190087CE08 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F8CA491BFAEF190087CE08 /* ProfileViewController.m */; settings = {ASSET_TAGS = (); }; };
+		49F8CA4C1BFAEF190087CE08 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49F8CA4A1BFAEF190087CE08 /* ProfileViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		6649FADDFCA566D46625E933 /* libPods-twitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D720276D35761BA9438740CF /* libPods-twitter.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,9 @@
 		49F8CA431BF9C41A0087CE08 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		49F8CA441BF9C41A0087CE08 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		49F8CA451BF9C41A0087CE08 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		49F8CA481BFAEF190087CE08 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		49F8CA491BFAEF190087CE08 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		49F8CA4A1BFAEF190087CE08 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		D720276D35761BA9438740CF /* libPods-twitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-twitter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -169,6 +174,9 @@
 				49F8CA3E1BF9C3F40087CE08 /* MenuViewController.h */,
 				49F8CA3F1BF9C3F40087CE08 /* MenuViewController.m */,
 				49F8CA401BF9C3F40087CE08 /* MenuViewController.xib */,
+				49F8CA481BFAEF190087CE08 /* ProfileViewController.h */,
+				49F8CA491BFAEF190087CE08 /* ProfileViewController.m */,
+				49F8CA4A1BFAEF190087CE08 /* ProfileViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -271,6 +279,7 @@
 				49F8CA471BF9C41A0087CE08 /* MenuCell.xib in Resources */,
 				4943A4051BF207F10053C576 /* TweetDetailViewController.xib in Resources */,
 				4943A3FC1BF1AB4D0053C576 /* TweetCell.xib in Resources */,
+				49F8CA4C1BFAEF190087CE08 /* ProfileViewController.xib in Resources */,
 				49F8CA421BF9C3F40087CE08 /* MenuViewController.xib in Resources */,
 				4943A3F71BF1A2160053C576 /* HomeTimelineViewController.xib in Resources */,
 				4943A3E31BF19D680053C576 /* LoginViewController.xib in Resources */,
@@ -338,6 +347,7 @@
 				4943A3E91BF19F450053C576 /* User.m in Sources */,
 				4943A3C91BF199980053C576 /* AppDelegate.m in Sources */,
 				4943A3EC1BF19F6E0053C576 /* Tweet.m in Sources */,
+				49F8CA4B1BFAEF190087CE08 /* ProfileViewController.m in Sources */,
 				4943A3C61BF199980053C576 /* main.m in Sources */,
 				4943A4041BF207F10053C576 /* TweetDetailViewController.m in Sources */,
 				4943A3E21BF19D680053C576 /* LoginViewController.m in Sources */,

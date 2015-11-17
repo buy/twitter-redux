@@ -36,7 +36,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some info" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Whb-G4-NiM">
-                    <rect key="frame" x="76" y="104" width="120" height="20"/>
+                    <rect key="frame" x="76" y="96" width="120" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="8Hl-U1-K84"/>
                         <constraint firstAttribute="height" constant="20" id="bRT-7e-ay5"/>
@@ -55,27 +55,66 @@
                     </items>
                 </navigationBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bsc-nN-doV">
-                    <rect key="frame" x="0.0" y="140" width="320" height="428"/>
+                    <rect key="frame" x="0.0" y="140" width="320" height="382"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logout" translatesAutoresizingMaskIntoConstraints="NO" id="eiF-Px-W1y">
+                    <rect key="frame" x="8" y="530" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="IoJ-Av-l10"/>
+                        <constraint firstAttribute="width" constant="30" id="XlH-T2-47P"/>
+                        <constraint firstAttribute="height" constant="40" id="e5X-NG-lcf"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="e5X-NG-lcf"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ut-me-hZR">
+                    <rect key="frame" x="46" y="536" width="180" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="YqM-CY-4R4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kyg-JX-6O2">
+                    <rect key="frame" x="8" y="530" width="304" height="30"/>
+                    <connections>
+                        <action selector="onLogout:" destination="-1" eventType="touchUpInside" id="jZW-R6-7aA"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="4Ut-me-hZR" firstAttribute="leading" secondItem="eiF-Px-W1y" secondAttribute="trailing" constant="8" id="0pI-FD-5Lt"/>
                 <constraint firstItem="RRL-YM-8eK" firstAttribute="top" secondItem="NHA-ws-185" secondAttribute="bottom" constant="8" id="3fT-my-D9e"/>
                 <constraint firstItem="NHA-ws-185" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3zX-GX-Npp"/>
+                <constraint firstAttribute="bottom" secondItem="eiF-Px-W1y" secondAttribute="bottom" constant="8" id="4Kh-Hj-z2J"/>
                 <constraint firstItem="Whb-G4-NiM" firstAttribute="leading" secondItem="RRL-YM-8eK" secondAttribute="trailing" constant="8" id="7q2-fW-u8z"/>
-                <constraint firstItem="Whb-G4-NiM" firstAttribute="top" secondItem="CFI-jP-FrT" secondAttribute="bottom" constant="8" id="8i7-wd-yA2"/>
+                <constraint firstItem="Whb-G4-NiM" firstAttribute="top" secondItem="CFI-jP-FrT" secondAttribute="bottom" id="8i7-wd-yA2"/>
                 <constraint firstItem="NHA-ws-185" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="A0v-w1-GWR"/>
                 <constraint firstAttribute="trailing" secondItem="Bsc-nN-doV" secondAttribute="trailing" id="GpW-yw-iKi"/>
+                <constraint firstItem="eiF-Px-W1y" firstAttribute="top" secondItem="Bsc-nN-doV" secondAttribute="bottom" constant="8" id="LGs-wK-PFC"/>
                 <constraint firstItem="CFI-jP-FrT" firstAttribute="top" secondItem="NHA-ws-185" secondAttribute="bottom" constant="12" id="NcS-Vx-GXz"/>
                 <constraint firstItem="CFI-jP-FrT" firstAttribute="leading" secondItem="RRL-YM-8eK" secondAttribute="trailing" constant="8" id="Qcd-19-9bA"/>
-                <constraint firstAttribute="bottom" secondItem="Bsc-nN-doV" secondAttribute="bottom" id="Uhk-gF-gW8"/>
+                <constraint firstAttribute="bottom" secondItem="Bsc-nN-doV" secondAttribute="bottom" constant="46" id="Uhk-gF-gW8"/>
                 <constraint firstItem="Bsc-nN-doV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZYF-Od-3lr"/>
+                <constraint firstItem="eiF-Px-W1y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="gYn-aI-eAX"/>
+                <constraint firstItem="4Ut-me-hZR" firstAttribute="centerY" secondItem="eiF-Px-W1y" secondAttribute="centerY" id="jSp-BU-6kO"/>
+                <constraint firstItem="kyg-JX-6O2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="knJ-3b-zTn"/>
                 <constraint firstItem="Bsc-nN-doV" firstAttribute="top" secondItem="RRL-YM-8eK" secondAttribute="bottom" constant="8" id="n36-Oc-YwD"/>
+                <constraint firstAttribute="trailing" secondItem="kyg-JX-6O2" secondAttribute="trailing" constant="8" id="pm8-A1-9nZ"/>
+                <constraint firstItem="kyg-JX-6O2" firstAttribute="top" secondItem="Bsc-nN-doV" secondAttribute="bottom" constant="8" id="qQW-nu-Yak"/>
                 <constraint firstAttribute="trailing" secondItem="NHA-ws-185" secondAttribute="trailing" id="tVa-Or-pfb"/>
                 <constraint firstItem="RRL-YM-8eK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="yQj-dF-1lR"/>
             </constraints>
             <point key="canvasLocation" x="305" y="576"/>
         </view>
     </objects>
+    <resources>
+        <image name="Logout" width="64" height="64"/>
+    </resources>
 </document>

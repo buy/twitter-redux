@@ -18,10 +18,15 @@ extern NSString * const UserDidLogoutNotification;
 @property (nonatomic, strong) NSString *screenName;
 @property (nonatomic, strong) NSString *profileImageURL;
 @property (nonatomic, strong) NSString *tagLine;
+@property (nonatomic, strong) NSString *followersCount;
+@property (nonatomic, strong) NSString *followingCount;
+@property (nonatomic, strong) NSString *statusesCount;
+@property (nonatomic, strong) NSString *backgroundImageURL;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
 + (User *)currentUser;
++ (void)getUserWithUserID:(NSString *)userID completion:(void (^)(User *user, NSError *error))completion;
 + (void)setCurrentUser:(User *)currentUser;
 + (void)logout;
 

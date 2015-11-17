@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-#import "HomeTimelineViewController.h"
+#import "HamburgerViewController.h"
 #import "TwttierClient.h"
 
 @interface LoginViewController ()
@@ -42,9 +42,9 @@
 #pragma mark - Initializers
 
 - (void)initHomeTimelineView {
-    HomeTimelineViewController *homeTimelineController = [[HomeTimelineViewController alloc] init];
-    UINavigationController *homeTimelineNavigationController = [[UINavigationController alloc] initWithRootViewController:homeTimelineController];
-    [self presentViewController:homeTimelineNavigationController animated:YES completion:nil];
+    HamburgerViewController *hamburgerViewController = [[HamburgerViewController alloc] init];
+    UINavigationController *hamburgerNavigationController = [[UINavigationController alloc] initWithRootViewController:hamburgerViewController];
+    [self presentViewController:hamburgerNavigationController animated:YES completion:nil];
 }
 
 - (void)initNavigationHeader {

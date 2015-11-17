@@ -10,7 +10,11 @@
 
 @interface HamburgerViewController : UIViewController
 
+@property (strong, nonatomic) UIViewController *menuViewController;
 @property (strong, nonatomic) UIViewController *contentViewController;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentViewLeftMargin;
+
+- (void)showMenu;
+- (void)hideMenu;
 
 @end
