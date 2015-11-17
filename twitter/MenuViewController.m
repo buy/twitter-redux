@@ -22,6 +22,7 @@
 
 @property (strong, nonatomic) UIViewController *profileViewController;
 @property (strong, nonatomic) UIViewController *homeTimelineViewController;
+@property (strong, nonatomic) UIViewController *mentionViewController;
 @property (strong, nonatomic) NSMutableArray *contentViewControllerArray;
 
 - (IBAction)onLogout:(id)sender;
@@ -55,13 +56,15 @@
 
 - (void)initContentViewControllers {
     self.homeTimelineViewController = [[UINavigationController alloc] initWithRootViewController:[[HomeTimelineViewController alloc] init]];
-    self.profileViewController = [[UINavigationController alloc] initWithRootViewController:[[ProfileViewController alloc] init]];
+    self.profileViewController = [[UINavigationController alloc] initWithRootViewController:[[ProfileViewController alloc] initWithDictionary:@{@"user_id": [User currentUser].userID}]];
+    self.mentionViewController = [[UINavigationController alloc] initWithRootViewController:[[HomeTimelineViewController alloc] initWithDictionary:@{@"show_mention": @YES}]];
 
     self.contentViewControllerArray = [[NSMutableArray alloc] init];
 
     [self.contentViewControllerArray addObjectsFromArray:@[
                 @{@"icon":@"TwitterMenu", @"label":@"Home Timeline", @"controller": self.homeTimelineViewController},
-                @{@"icon":@"Profile", @"label":@"Profile", @"controller": self.profileViewController}
+                @{@"icon":@"Profile", @"label":@"Profile", @"controller": self.profileViewController},
+                @{@"icon":@"MentionIcon", @"label":@"Mention", @"controller": self.mentionViewController}
     ]];
 
     self.hamburgerViewController.contentViewController = self.homeTimelineViewController;

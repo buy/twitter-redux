@@ -55,7 +55,7 @@ NSString * const OnNewProfileRequestNotification = @"OnNewProfileRequestNotifica
 
     if (self.tweet.retweetedStatus) {
         tweet = tweet.retweetedStatus;
-        self.retweetedLabel.text = [NSString stringWithFormat:@"%@ Retweeted", tweet.user.name];
+        self.retweetedLabel.text = [NSString stringWithFormat:@"%@ Retweeted", self.tweet.user.name];
         self.retweetedLabel.hidden = NO;
         self.retweetedImage.hidden = NO;
     }
@@ -116,6 +116,7 @@ NSString * const OnNewProfileRequestNotification = @"OnNewProfileRequestNotifica
     else {
         userID = [NSString stringWithFormat:@"%@", self.tweet.user.userID];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:OnNewProfileRequestNotification object:nil userInfo:@{@"user_id": self.tweet.user.userID}];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:OnNewProfileRequestNotification object:nil userInfo:@{@"user_id": userID}];
 }
 @end

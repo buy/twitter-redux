@@ -22,6 +22,7 @@ NSString * const OnMenuButtonNotification = @"OnMenuButtonNotification";
 
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property (weak, nonatomic) NSString *userID;
+@property BOOL showMention;
 
 @end
 
@@ -32,6 +33,7 @@ NSString * const OnMenuButtonNotification = @"OnMenuButtonNotification";
 
     if (self) {
         self.userID = data[@"user_id"];
+        self.showMention = data[@"show_mention"];
     }
     
     return self;
@@ -160,30 +162,58 @@ NSString * const OnMenuButtonNotification = @"OnMenuButtonNotification";
         [requestParams setObject:self.userID forKey:@"user_id"];
     }
 
-    [[TwitterClient sharedInstance] fetchTweetsWithCompletion:requestParams completion:^(NSArray *tweets, NSError *error) {
-        runOnMainQueueWithoutDeadlocking(^{
-            [MBProgressHUD hideHUDForView:self.homelineTableView animated:YES];
-            [self.homelineTableView.infiniteScrollingView stopAnimating];
-            [self.homelineTableView.pullToRefreshView stopAnimating];
-
-        });
-
-        if (tweets) {
-            NSLog(@"[INFO] Fetched %lu tweets", (unsigned long)tweets.count);
-
-            if (lastTweetID) {
-                [self.tweets addObjectsFromArray:tweets];
+    if (self.showMention) {
+        [[TwitterClient sharedInstance] fetchMentionsWithCompletion:requestParams completion:^(NSArray *tweets, NSError *error) {
+            runOnMainQueueWithoutDeadlocking(^{
+                [MBProgressHUD hideHUDForView:self.homelineTableView animated:YES];
+                [self.homelineTableView.infiniteScrollingView stopAnimating];
+                [self.homelineTableView.pullToRefreshView stopAnimating];
+                
+            });
+            
+            if (tweets) {
+                NSLog(@"[INFO] Fetched %lu mentions", (unsigned long)tweets.count);
+                
+                if (lastTweetID) {
+                    [self.tweets addObjectsFromArray:tweets];
+                }
+                else {
+                    self.tweets = [NSMutableArray arrayWithArray:tweets];
+                }
+                
+                [self.homelineTableView reloadData];
             }
             else {
-                self.tweets = [NSMutableArray arrayWithArray:tweets];
+                NSLog(@"[ERROR] Unable to load mentions");
             }
-
-            [self.homelineTableView reloadData];
-        }
-        else {
-            NSLog(@"[ERROR] Unable to load tweets");
-        }
-    }];
+        }];
+    }
+    else {
+        [[TwitterClient sharedInstance] fetchTweetsWithCompletion:requestParams completion:^(NSArray *tweets, NSError *error) {
+            runOnMainQueueWithoutDeadlocking(^{
+                [MBProgressHUD hideHUDForView:self.homelineTableView animated:YES];
+                [self.homelineTableView.infiniteScrollingView stopAnimating];
+                [self.homelineTableView.pullToRefreshView stopAnimating];
+                
+            });
+            
+            if (tweets) {
+                NSLog(@"[INFO] Fetched %lu tweets", (unsigned long)tweets.count);
+                
+                if (lastTweetID) {
+                    [self.tweets addObjectsFromArray:tweets];
+                }
+                else {
+                    self.tweets = [NSMutableArray arrayWithArray:tweets];
+                }
+                
+                [self.homelineTableView reloadData];
+            }
+            else {
+                NSLog(@"[ERROR] Unable to load tweets");
+            }
+        }];
+    }
 }
 
 #pragma mark - Private methods

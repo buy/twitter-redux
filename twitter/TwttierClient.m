@@ -81,6 +81,26 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
+- (void)fetchMentionsWithCompletion:(NSDictionary *)dictionary
+                       completion:(void (^)(NSArray *tweets, NSError *error))completion {
+    self.fetchTweetsCompletion = completion;
+    
+    NSString *requestURL = @"1.1/statuses/mentions_timeline.json";
+    
+    [self GET:requestURL parameters:dictionary success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        
+        NSLog(@"[INFO] Start fetching the mentions ...");
+        NSArray *tweets = [Tweet tweetsWithArray:responseObject];
+        self.fetchTweetsCompletion(tweets, nil);
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        
+        NSLog(@"[ERROR] Failed fetching the mentions: %@", error);
+        self.fetchTweetsCompletion(nil, error);
+        
+    }];
+}
+
 - (void)postTweetWithCompletion:(NSDictionary *)dictionary
                      completion:(void (^)(Tweet *tweet, NSError *error))completion {
 
